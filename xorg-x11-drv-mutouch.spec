@@ -5,7 +5,7 @@
 Summary:   Xorg X11 mutouch input driver
 Name:      xorg-x11-drv-mutouch
 Version:   1.3.0
-Release:   4%{?dist}
+Release:   5%{?dist}
 URL:       http://www.x.org
 License:   MIT
 Group:     User Interface/X Hardware Support
@@ -54,6 +54,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man4/mutouch.4*
 
 %changelog
+* Wed Apr 23 2014 Adam Jackson <ajax@redhat.com> 1.3.0-5
+- Rebuild for server 1.15
+
 * Wed Aug 22 2012 Peter Hutterer <peter.hutterer@redhat.com> - 1.3.0-4
 - Rebuild for server 1.13
 
