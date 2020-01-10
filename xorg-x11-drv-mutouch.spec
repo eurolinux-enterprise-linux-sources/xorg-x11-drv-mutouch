@@ -4,28 +4,33 @@
 
 Summary:   Xorg X11 mutouch input driver
 Name:      xorg-x11-drv-mutouch
-Version:   1.2.1
-Release:   5%{?dist}
+Version:   1.3.0
+Release:   2%{?dist}
 URL:       http://www.x.org
 License:   MIT
 Group:     User Interface/X Hardware Support
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Source0:   ftp://ftp.x.org/pub/individual/driver/%{tarball}-%{version}.tar.bz2
-Patch1:    mutouch-1.2.1-abi.patch
+Patch01:   0001-Use-xf86SetStrOption-for-Type-and-Device-prints-to-t.patch
+Patch02:   0002-Don-t-free-on-PreInit-failure-the-server-calls-UnIni.patch
+Patch03:   0003-Test-open-device-in-PreInit-fail-if-it-doesn-t-work.patch
 
 ExcludeArch: s390 s390x
 
-BuildRequires: xorg-x11-server-sdk >= 1.3.0.0-6
+BuildRequires: xorg-x11-server-sdk >= 1.10.0-1
 
-Requires:  xorg-x11-server-Xorg >= 1.3.0.0-6
+Requires:  Xorg %(xserver-sdk-abi-requires ansic)
+Requires:  Xorg %(xserver-sdk-abi-requires xinput)
 
 %description 
 X.Org X11 mutouch input driver.
 
 %prep
 %setup -q -n %{tarball}-%{version}
-%patch1 -p1
+%patch01 -p1
+%patch02 -p1
+%patch03 -p1
 
 %build
 %configure --disable-static
@@ -49,6 +54,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man4/mutouch.4*
 
 %changelog
+* Tue Jul 19 2011 Peter Hutterer <peter.hutterer@redhat.com> 1.3.0-2
+- Fix crashers on PreInit failure
+
+* Tue Jun 28 2011 Peter Hutterer <peter.hutterer@redhat.com> 1.3.0-1
+- mutouch 1.3.0 (#713810)
+
 * Wed Jan 06 2010 Peter Hutterer <peter.hutterer@redhat.com> 1.2.1-5
 - Use global instead of define as per Packaging Guidelines
 - Fix indentation for Version and Release.
